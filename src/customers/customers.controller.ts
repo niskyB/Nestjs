@@ -8,18 +8,22 @@ import {
   Delete,
   Body,
   Res,
+  UseFilters,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { HttpExceptionFilter } from 'src/filter/http-exception.filter';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/createCustomer.dto';
 import { UpdateCustomerDto } from './dto/updateCustomer.dto';
 import { Customer } from './interfaces/customer.interface';
 
 @Controller('customers')
+@UseFilters(HttpExceptionFilter) // controller scoped
 export class CustomersController {
   constructor(private customersService: CustomersService) {}
 
   @Get()
+  //@UseFilters(HttpExceptionFilter) // method scoped
   @HttpCode(200)
   async findAll(): Promise<Customer[]> {
     return this.customersService.findAll();
