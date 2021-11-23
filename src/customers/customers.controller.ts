@@ -9,13 +9,17 @@ import {
   Body,
   Res,
   UseFilters,
+  ParseUUIDPipe,
+  UsePipes,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { HttpExceptionFilter } from 'src/filter/http-exception.filter';
+import { JoiValidationPipe } from 'src/pipe/schema-validator.pipe';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/createCustomer.dto';
 import { UpdateCustomerDto } from './dto/updateCustomer.dto';
 import { Customer } from './interfaces/customer.interface';
+import { createCustomerSchema } from './joi-schema/createCustomerSchema';
 
 @Controller('customers')
 @UseFilters(HttpExceptionFilter) // controller scoped
@@ -30,12 +34,14 @@ export class CustomersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  // use pipe to transform param
+  findOne(@Param('id', new ParseUUIDPipe()) id: string) {
     return `This action returns a #${id} customer`;
   }
 
   @Post()
   @HttpCode(201)
+  @UsePipes(new JoiValidationPipe(createCustomerSchema))
   async create(@Body() createCustomerDto: CreateCustomerDto) {
     this.customersService.create(createCustomerDto);
   }
