@@ -23,6 +23,7 @@ import { Customer } from './interfaces/customer.interface';
 import { createCustomerSchema } from './joi-schema/createCustomerSchema';
 
 @Controller('customers')
+@Roles('user')
 @UseFilters(HttpExceptionFilter) // controller scoped
 export class CustomersController {
   constructor(private customersService: CustomersService) {}
@@ -49,6 +50,7 @@ export class CustomersController {
   }
 
   @Put(':id')
+  @Roles('admin')
   update(
     @Param('id') id: string,
     @Body() updateCustomerDto: UpdateCustomerDto,
@@ -58,6 +60,7 @@ export class CustomersController {
   }
 
   @Delete(':id')
+  @Roles('admin')
   remove(@Param('id') id: string) {
     return `This action removes a #${id} customer`;
   }
