@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import Joi from 'joi';
+import * as Joi from 'joi';
 import { CreateCustomerDto } from '../dto/createCustomer.dto';
 
 export const createCustomerSchema = Joi.object<CreateCustomerDto>({

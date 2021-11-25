@@ -13,8 +13,8 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { HttpExceptionFilter } from 'src/filter/http-exception.filter';
-import { JoiValidationPipe } from 'src/pipe/schema-validator.pipe';
+import { HttpExceptionFilter } from './filter/http-exception.filter';
+import { JoiValidationPipe } from './pipe/schema-validator.pipe';
 import { CustomersService } from './customers.service';
 import { Roles } from './decorator/role.decorator';
 import { CreateCustomerDto } from './dto/createCustomer.dto';
